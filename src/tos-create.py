@@ -9,24 +9,21 @@
 import os
 import argparse
 
-makefile_tmpl = '''
-COMPONENT={app_name}
-include $(MAKERULES)
-'''
+makefile_tmpl = \
+'''COMPONENT={app_name}
+include $(MAKERULES)'''
 
-app_tmpl = '''
-configuration {app_name}{{
+app_tmpl = \
+'''configuration {app_name}{{
 }}
 implementation {{
   components {module_name}, MainC;
 
   {module_name} -> MainC.Boot;
-}}
+}}'''
 
-'''
-
-module_tmpl = '''
-module {module_name} {{
+module_tmpl = \
+'''module {module_name} {{
   uses {{
     interface Boot;
   }}
@@ -38,13 +35,18 @@ implementation {{
   event void Boot.booted(){{
   }}
 
-}}
+}}'''
+
+readme_tmpl = \
+'''# {app_name}
+TinyOS Application
 '''
 
 creation_list = (
     (makefile_tmpl, 'Makefile'),
     (app_tmpl, '{app_name}.nc'),
     (module_tmpl, '{module_name}.nc'),
+    (readme_tmpl, 'README.md'),
 )
 
 def main():
